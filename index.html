@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central de Planilhas</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            color: #243447;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 30px;
+            margin-bottom: 12px;
+        }
+
+        header p {
+            color: #64748b;
+            font-size: 15px;
+        }
+
+        /* CATEGORIAS */
+
+        .categoria {
+            margin-bottom: 40px;
+        }
+
+        .categoria-titulo {
+            font-size: 21px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #16a34a;
+        }
+
+        /* PRIMEIRA CATEGORIA - LISTA */
+
+        .lista {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* SEGUNDA CATEGORIA - LADO A LADO */
+
+        .grid {
+            display: grid;
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        /* CARTÕES */
+
+        .card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #243447;
+            border: 1px solid #e2e8f0;
+            transition: 0.2s ease;
+            min-width: 0;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: #16a34a;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .icone {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background: #dcfce7;
+            font-size: 26px;
+            flex-shrink: 0;
+        }
+
+        .card h3 {
+            font-size: 16px;
+            margin-bottom: 6px;
+            overflow-wrap: anywhere;
+        }
+
+        .card p {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        .seta {
+            margin-left: auto;
+            font-size: 20px;
+            color: #16a34a;
+        }
+
+        @media (max-width: 800px) {
+            .grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 25px auto;
+                padding: 15px;
+            }
+
+            header h1 {
+                font-size: 25px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="container">
+
+        <header>
+            <h1>Central de Planilhas</h1>
+            <p>Selecione a planilha que deseja acessar.</p>
+        </header>
+
+        <div id="categorias"></div>
+
+    </main>
+
+    <script>
+        // CADASTRO DAS CATEGORIAS E PLANILHAS
+
+        const categorias = [
+            {
+                nome: "Planilhas Administrativas",
+                formato: "lista",
+
+                planilhas: [
+                    {
+                        nome: "Contratos",
+                     
+                        link: "https://docs.google.com/spreadsheets/d/1b_CZpYjm8Fcs6iML0RY5IqTPtSEh9x-uzGQY-uPDJAI/edit?usp=drive_web&ouid=112294715541894736441"
+                    },
+                    {
+                        nome: "CARGA",
+                        descricao: "Acessar controle de Materiais permanentes e bélico",
+                        link: "https://docs.google.com/spreadsheets/d/1cJrqqnB2xFZbRbQtjMdvWj0JOrmKdgGBhjAO2glwpng/edit?usp=drive_web&ouid=112294715541894736441"
+                    },
+                    {
+                        nome: "PROTOCOLO",
+                        descricao: "Acessar controle de Ofícios, Despachos, Notas e documentos Arquivados",
+                        link: "https://docs.google.com/spreadsheets/d/1QKh3Tcv8qk6QoGEZ3wc6wTBgUcCQ6EtUCb3-Zpz6ihc/edit"
+                    },
+                    {
+                        nome: "MEDICAMENTOS",
+                        descricao: "Acessar controle de medicamentos mensais por unidade",
+                        link: "https://docs.google.com/spreadsheets/d/1pLUmbSNJUp5-wniAknrBzgEVD4pm87kF5vmFM62Y1cM/edit?usp=drive_web&ouid=112294715541894736441"
+                    },
+                    {
+                        nome: "CORRELATOS",
+                        descricao: "Acessar controle de correlatos mensais por unidade",
+                        link: "https://docs.google.com/spreadsheets/d/1A7n3QMbrrV75wgEF8cpKDNRQV2XivRVwjczM8MGUgmk/edit?usp=drive_web&ouid=112294715541894736441"
+                    },
+                    {
+                        nome: "DRIVE 2026",
+                        link: "https://drive.google.com/drive/folders/1v8Aclnq6_mfRaZSCsVqHLEGo7Ughvm6D"
+                    }
+                ]
+            },
+
+            {
+                nome: "Outras Links",
+                formato: "grid",
+
+                planilhas: [
+                    {
+                        nome: "PAE",
+                        link: "https://www.sistemas.pa.gov.br/governodigital/public/main/index.xhtml"
+                    },
+                    {
+                        nome: "GESTOR WEB",
+                        link: "https://gestorweb.pm.pa.gov.br/"
+                    },
+                    {
+                        nome: "SITE DA PM",
+                        link: "https://www.pm.pa.gov.br/"
+                    }
+                ]
+            }
+        ];
+
+        // GERAÇÃO AUTOMÁTICA
+
+        const container = document.getElementById("categorias");
+
+        categorias.forEach(categoria => {
+
+            const secao = document.createElement("section");
+            secao.className = "categoria";
+
+            const titulo = document.createElement("h2");
+            titulo.className = "categoria-titulo";
+            titulo.textContent = categoria.nome;
+
+            const area = document.createElement("div");
+            area.className =
+                categoria.formato === "lista" ? "lista" : "grid";
+
+            categoria.planilhas.forEach(planilha => {
+
+                let url;
+
+                try {
+                    url = new URL(planilha.link);
+
+                    if (
+                        url.protocol !== "https:" ||
+                        url.hostname !== "docs.google.com" ||
+                        !url.pathname.startsWith("/spreadsheets/d/")
+                    ) {
+                        return;
+                    }
+                } catch {
+                    return;
+                }
+
+                const card = document.createElement("a");
+                card.href = url.href;
+                card.target = "_blank";
+                card.rel = "noopener noreferrer";
+                card.className = "card";
+
+                const icone = document.createElement("div");
+                icone.className = "icone";
+                icone.textContent = "📊";
+
+                const info = document.createElement("div");
+
+                const nome = document.createElement("h3");
+                nome.textContent = planilha.nome;
+
+                const descricao = document.createElement("p");
+                descricao.textContent = planilha.descricao;
+
+                info.append(nome, descricao);
+                card.append(icone, info);
+
+                if (categoria.formato === "lista") {
+                    const seta = document.createElement("span");
+                    seta.className = "seta";
+                    seta.textContent = "↗";
+                    card.appendChild(seta);
+                }
+
+                area.appendChild(card);
+            });
+
+            secao.append(titulo, area);
+            container.appendChild(secao);
+        });
+    </script>
+
+</body>
+</html>
