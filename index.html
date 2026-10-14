@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -201,7 +200,7 @@
             },
 
             {
-                nome: "Outras Links",
+                nome: "Outros Links",
                 formato: "grid",
 
                 planilhas: [
@@ -219,6 +218,7 @@
                     }
                 ]
             }
+            
         ];
 
         // GERAÇÃO AUTOMÁTICA
@@ -246,12 +246,11 @@
                     url = new URL(planilha.link);
 
                     if (
-                        url.protocol !== "https:" ||
-                        url.hostname !== "docs.google.com" ||
-                        !url.pathname.startsWith("/spreadsheets/d/")
-                    ) {
-                        return;
-                    }
+                    url.protocol !== "https:" &&
+                    url.protocol !== "http:"
+                ) {
+                    return;
+                }
                 } catch {
                     return;
                 }
